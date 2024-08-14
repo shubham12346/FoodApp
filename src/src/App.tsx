@@ -1,25 +1,118 @@
-import React from "react";
-import { useState } from "react";
+import React, { Suspense, lazy } from "react";
 import "../App.css";
+import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
+import Header from "./component/Header";
+import Body from "./component/Body";
+import About from "./component/about/About";
+import Error from "./component/Error";
+import LoginForm from "./component/login/LoginForm";
+import { AuthProvider } from "./AuthContext";
+import GuardedRoutes from "./component/guardedRoutes/GuardedRoutes";
+import { Provider } from "react-redux";
+import AppStore from "./store/appStore";
+
+const AppLayout = () => {
+  return (
+    <div className="app">
+      <Header />
+      <Outlet />
+    </div>
+  );
+};
+
+export const Loader = () => {
+  return <div style={{ margin: "100px" }}>Loader....</div>;
+};
+
+const ContactFile = lazy(() => import("./component/Contact"));
+const RestaurantIndexModule = lazy(
+  () => import("./component/restaurantDetail/RestaurantIndex")
+);
+
+const CartIndex = lazy(() => import("./component/cart/CartIndex"));
+
+const appRouter = createBrowserRouter([
+  {
+    path: "/login",
+    element: <LoginForm />,
+    errorElement: <Error />,
+  },
+  {
+    path: "/",
+    element: (
+      <GuardedRoutes>
+        <AppLayout />
+      </GuardedRoutes>
+    ),
+    errorElement: <Error />,
+    children: [
+      {
+        path: "/",
+        element: (
+          <GuardedRoutes>
+            <Body />
+          </GuardedRoutes>
+        ),
+        errorElement: <Error />,
+      },
+      {
+        path: "/about",
+        element: (
+          <GuardedRoutes>
+            <About />
+          </GuardedRoutes>
+        ),
+        errorElement: <Error />,
+      },
+      {
+        path: "/:restId",
+        element: (
+          <Suspense fallback={<Loader />}>
+            <GuardedRoutes>
+              <RestaurantIndexModule />
+            </GuardedRoutes>
+          </Suspense>
+        ),
+        errorElement: <Error />,
+      },
+      {
+        path: "/contact",
+        element: (
+          <Suspense fallback={<Loader />}>
+            <GuardedRoutes>
+              <ContactFile />
+            </GuardedRoutes>
+          </Suspense>
+        ),
+        errorElement: <Error />,
+      },
+      {
+        path: "/cart",
+        element: (
+          <Suspense fallback={<Loader />}>
+            <GuardedRoutes>
+              <CartIndex />
+            </GuardedRoutes>
+          </Suspense>
+        ),
+        errorElement: <Error />,
+      },
+    ],
+  },
+  {
+    path: "*",
+    element: <LoginForm />,
+    errorElement: <Error />,
+  },
+]);
 
 function App() {
-  const [count, setCount] = useState(0);
-
   return (
-    <>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <Provider store={AppStore}>
+      <AuthProvider>
+        <RouterProvider router={appRouter} />
+      </AuthProvider>
+    </Provider>
   );
 }
 

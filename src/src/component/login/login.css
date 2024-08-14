@@ -1,0 +1,58 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+.loginWrapper {
+  position: relative;
+  background-image: linear-gradient(
+    to bottom right,
+    rgb(194, 143, 49),
+    rgb(203, 118, 118)
+  );
+  width: 100vw;
+  height: 100vh;
+}
+
+.LoginForm {
+  max-width: 500px;
+  max-height: 500px;
+  background-color: rgb(239, 219, 219);
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  border-radius: 20px;
+  padding: 20px;
+  box-shadow: 10px 5px 12px rgb(227, 159, 32);
+}
+.userform {
+  padding-top: 20px;
+}
+.userInput {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+}
+.userInput input {
+  font-size: 1rem;
+  padding: 5px;
+  border-radius: 4px;
+  width: 75%;
+  height: 2rem;
+}
+.loginBtn {
+  padding: 10px;
+  margin-top: 20px;
+  margin-left: 10px;
+  width: 200px;
+}
+.userInputSelect select {
+  width: 50%;
+  padding: 10px;
+}
+.userInputSelect .userOptions {
+  padding: 10px;
+}
