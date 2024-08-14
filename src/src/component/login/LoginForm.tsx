@@ -16,7 +16,7 @@ const LoginForm = () => {
     validate: (values) => {
       const errors = {};
       if (!values.username) {
-        errors.username = "Required";
+        errors["username"] = "Required";
       }
       return errors;
     },

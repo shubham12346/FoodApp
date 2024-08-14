@@ -9,12 +9,12 @@ const CartIndex = () => {
   const cart = useSelector((state: RootState) => state.cart);
   const dispatch = useDispatch();
 
-  const handleRemoveItem = (item) => {
-    dispatch(clearCart({}));
+  const handleRemoveItem = () => {
+    dispatch(clearCart());
   };
 
   const clearCarts = () => {
-    dispatch(clearCart({}));
+    dispatch(clearCart());
   };
 
   return (
@@ -39,7 +39,7 @@ const CartIndex = () => {
                   <MenuITems
                     addRemoveConfig={"Remove"}
                     deliveryTime={item?.item?.deliveryTime}
-                    handleAddRemove={() => handleRemoveItem(item)}
+                    handleAddRemove={() => handleRemoveItem()}
                     logo={logo}
                     name={item?.item?.name}
                     price={item?.item?.price}

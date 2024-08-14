@@ -4,7 +4,8 @@ import { restaurantData } from "../restaurant";
 
 const RestaurantDetail = () => {
   const { restId } = useParams();
-  const [restaurantDetail, setRestaurantDetail] = useState();
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [restaurantDetail, setRestaurantDetail] = useState<any>();
   const [loader, setLoader] = useState(false);
   let timer;
 

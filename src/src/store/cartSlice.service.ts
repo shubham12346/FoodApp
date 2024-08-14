@@ -12,15 +12,16 @@ const cartSlice = createSlice({
   name: "cart",
   initialState: initialState,
   reducers: {
-    addToCart: (state, action: PayloadAction<any[]>) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    addToCart: (state, action: PayloadAction<any>) => {
       state.items.push(action?.payload);
       state.total++;
     },
-    removeItem: (state, action) => {
+    removeItem: (state) => {
       state.items.pop();
       state.total--;
     },
-    clearCart: (state, action: any) => {
+    clearCart: (state) => {
       state.items = [];
       state.total = 0;
     },
