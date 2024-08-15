@@ -34,12 +34,12 @@ const CartIndex = lazy(() => import("./component/cart/CartIndex"));
 const appRouter = createBrowserRouter(
   [
     {
-      path: "/login",
+      path: "login",
       element: <LoginForm />,
       errorElement: <Error />,
     },
     {
-      path: "/",
+      path: "",
       element: (
         <GuardedRoutes>
           <AppLayout />
@@ -48,7 +48,7 @@ const appRouter = createBrowserRouter(
       errorElement: <Error />,
       children: [
         {
-          path: "/",
+          path: "",
           element: (
             <GuardedRoutes>
               <Body />
@@ -57,7 +57,7 @@ const appRouter = createBrowserRouter(
           errorElement: <Error />,
         },
         {
-          path: "/about",
+          path: "about",
           element: (
             <GuardedRoutes>
               <About />
@@ -66,7 +66,7 @@ const appRouter = createBrowserRouter(
           errorElement: <Error />,
         },
         {
-          path: "/:restId",
+          path: ":restId",
           element: (
             <Suspense fallback={<Loader />}>
               <GuardedRoutes>
@@ -77,7 +77,7 @@ const appRouter = createBrowserRouter(
           errorElement: <Error />,
         },
         {
-          path: "/contact",
+          path: "contact",
           element: (
             <Suspense fallback={<Loader />}>
               <GuardedRoutes>
@@ -88,7 +88,7 @@ const appRouter = createBrowserRouter(
           errorElement: <Error />,
         },
         {
-          path: "/cart",
+          path: "cart",
           element: (
             <Suspense fallback={<Loader />}>
               <GuardedRoutes>
