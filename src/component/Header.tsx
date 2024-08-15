@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Logo from "../assest/logo1.jpg";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import useOnlineStatus from "./hooks/useOnlineStatus";
 import { useSelector } from "react-redux";
 import { RootState } from "../store/appStore";
@@ -10,6 +10,7 @@ const Header = () => {
   const cart = useSelector((state: RootState) => state.cart);
   const [login, setLogin] = useState(false);
   const { state, setLogout } = useAuth();
+  const navigate = useNavigate();
 
   const onlineStatus = useOnlineStatus();
   return (
@@ -25,23 +26,23 @@ const Header = () => {
           <li className="p-2 text-xl">
             Online Status {onlineStatus ? "✅" : "🔴"}
           </li>
-          <Link to="/">
+          <Link to="/home">
             <li className="p-2 text-xl">Home</li>
           </Link>
-          <Link to="/about">
+          <Link to="/home/about">
             <li className="p-2 text-xl">About </li>
           </Link>
-          <Link to="/contact">
+          <Link to="/home/contact">
             <li className="p-2 text-xl">Contact </li>
           </Link>
-          <Link to="/cart">
+          <Link to="/home/cart">
             <li className="p-2 text-xl font-bold">Cart ({cart?.total}) </li>
           </Link>
         </ul>
 
         <div
           onClick={() => {
-            setLogout();
+            setLogout(navigate);
           }}
           className=" text-xl cursor-pointer"
         >

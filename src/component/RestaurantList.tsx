@@ -3,7 +3,6 @@ import Restaurants, { withPromotedLevel } from "./Restaurants";
 
 const RestaurantList = ({ restaurant }: any) => {
   const RestaurantPromoted = withPromotedLevel(Restaurants);
-  console.log("restauranttestttt", restaurant);
   return (
     <div>
       <div className="restaurantContainer">

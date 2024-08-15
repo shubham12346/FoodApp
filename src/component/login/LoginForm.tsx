@@ -28,7 +28,7 @@ const LoginForm = () => {
   const handleLogin = (username) => {
     setLogin(username);
     localStorage.setItem("login", username);
-    navigate("/");
+    navigate("/home");
   };
 
   return (

@@ -1,4 +1,5 @@
 import React, { useState, createContext, ReactNode, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 
 // types.ts
 export interface AuthState {
@@ -12,7 +13,7 @@ export interface AuthState {
 export interface AuthContextType {
   state: AuthState;
   setLogin: (username: string) => void;
-  setLogout: () => void;
+  setLogout: (navigate: (path: string) => void) => void;
 }
 
 const initialState: AuthState = {
@@ -36,10 +37,10 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
     setState((prev) => ({ ...prev, isLoggedIn: true, username: username }));
   };
 
-  const setLogout = () => {
-    setState((prev) => ({ ...prev, isLoggedIn: false }));
-    const basename = import.meta.env.VITE_BASENAME || "/";
-    window.location.href = `${basename}/login`;
+  const setLogout = (navigate: (path: string) => void) => {
+    localStorage.removeItem("login");
+    setState((prev) => ({ ...prev, isLoggedIn: false, username: "" }));
+    navigate("/"); // Redirect to the desired route after logout
   };
 
   return (

@@ -32,7 +32,7 @@ const Restaurants: React.FC<RestaurantsProps> = (props: any) => {
   const navigate = useNavigate();
 
   const handleNavigate = (id: string) => {
-    navigate(`/${id}`);
+    navigate(`/home/${id}`);
   };
 
   return (
