@@ -1,6 +1,11 @@
 import React, { lazy, Suspense } from "react";
 import "./App.css";
-import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
+import {
+  createBrowserRouter,
+  RouterProvider,
+  Outlet,
+  BrowserRouter,
+} from "react-router-dom";
 import Header from "./component/Header";
 import Body from "./component/Body";
 import About from "./component/about/About";
@@ -31,89 +36,88 @@ const RestaurantIndexModule = lazy(
 
 const CartIndex = lazy(() => import("./component/cart/CartIndex"));
 
-const appRouter = createBrowserRouter(
-  [
-    {
-      path: "login",
-      element: <LoginForm />,
-      errorElement: <Error />,
-    },
-    {
-      path: "",
-      element: (
-        <GuardedRoutes>
-          <AppLayout />
-        </GuardedRoutes>
-      ),
-      errorElement: <Error />,
-      children: [
-        {
-          path: "",
-          element: (
+const appRouter = createBrowserRouter([
+  {
+    path: "login",
+    element: <LoginForm />,
+    errorElement: <Error />,
+  },
+  {
+    path: "",
+    element: (
+      <GuardedRoutes>
+        <AppLayout />
+      </GuardedRoutes>
+    ),
+    errorElement: <Error />,
+    children: [
+      {
+        path: "",
+        element: (
+          <GuardedRoutes>
+            <Body />
+          </GuardedRoutes>
+        ),
+        errorElement: <Error />,
+      },
+      {
+        path: "about",
+        element: (
+          <GuardedRoutes>
+            <About />
+          </GuardedRoutes>
+        ),
+        errorElement: <Error />,
+      },
+      {
+        path: ":restId",
+        element: (
+          <Suspense fallback={<Loader />}>
             <GuardedRoutes>
-              <Body />
+              <RestaurantIndexModule />
             </GuardedRoutes>
-          ),
-          errorElement: <Error />,
-        },
-        {
-          path: "about",
-          element: (
+          </Suspense>
+        ),
+        errorElement: <Error />,
+      },
+      {
+        path: "contact",
+        element: (
+          <Suspense fallback={<Loader />}>
             <GuardedRoutes>
-              <About />
+              <ContactFile />
             </GuardedRoutes>
-          ),
-          errorElement: <Error />,
-        },
-        {
-          path: ":restId",
-          element: (
-            <Suspense fallback={<Loader />}>
-              <GuardedRoutes>
-                <RestaurantIndexModule />
-              </GuardedRoutes>
-            </Suspense>
-          ),
-          errorElement: <Error />,
-        },
-        {
-          path: "contact",
-          element: (
-            <Suspense fallback={<Loader />}>
-              <GuardedRoutes>
-                <ContactFile />
-              </GuardedRoutes>
-            </Suspense>
-          ),
-          errorElement: <Error />,
-        },
-        {
-          path: "cart",
-          element: (
-            <Suspense fallback={<Loader />}>
-              <GuardedRoutes>
-                <CartIndex />
-              </GuardedRoutes>
-            </Suspense>
-          ),
-          errorElement: <Error />,
-        },
-      ],
-    },
-    {
-      path: "*",
-      element: <LoginForm />,
-      errorElement: <Error />,
-    },
-  ],
-  { basename: "/FoodApp.github.io/" }
-);
+          </Suspense>
+        ),
+        errorElement: <Error />,
+      },
+      {
+        path: "cart",
+        element: (
+          <Suspense fallback={<Loader />}>
+            <GuardedRoutes>
+              <CartIndex />
+            </GuardedRoutes>
+          </Suspense>
+        ),
+        errorElement: <Error />,
+      },
+    ],
+  },
+  {
+    path: "*",
+    element: <LoginForm />,
+    errorElement: <Error />,
+  },
+]);
 
 function App() {
   return (
     <Provider store={AppStore}>
       <AuthProvider>
-        <RouterProvider router={appRouter} />
+        <BrowserRouter basename="/FoodApp.github.io">
+          <RouterProvider router={appRouter} />
+        </BrowserRouter>
       </AuthProvider>
     </Provider>
     // <>Hello this is react app</>

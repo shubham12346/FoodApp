@@ -6,8 +6,5 @@ import Pages from "vite-plugin-pages";
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react(), Pages()],
-  base: "/FoodApp.github.io/",
-  build: {
-    outDir: "dist",
-  },
+  base: "./",
 });
