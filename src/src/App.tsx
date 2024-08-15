@@ -118,9 +118,7 @@ function App() {
   return (
     <Provider store={AppStore}>
       <AuthProvider>
-        <BrowserRouter basename="/FoodApp.github.io/">
-          <RouterProvider router={appRouter} />
-        </BrowserRouter>
+        <RouterProvider router={appRouter} />
       </AuthProvider>
     </Provider>
   );
