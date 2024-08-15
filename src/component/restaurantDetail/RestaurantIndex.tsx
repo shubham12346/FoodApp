@@ -1,5 +1,5 @@
-import React, { Suspense, useEffect, useState } from "react";
-import RestaurantInfoCard from "./RestaurantInfoCard";
+import React, { useEffect, useState } from "react";
+import RestaurantInfoCard from "./RestaurantInfoCard.tsx";
 import { useParams } from "react-router-dom";
 import { restaurantData, restaurantMenus } from "../restaurant.ts";
 import AccordionComponent from "./AccordianComponent.tsx";
