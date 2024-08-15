@@ -1,6 +1,6 @@
 import React, { lazy, Suspense } from "react";
 import "./App.css";
-import { RouterProvider, Outlet, createHashRouter } from "react-router-dom";
+import { Outlet, HashRouter, Routes, Route } from "react-router-dom";
 import Header from "./component/Header";
 import Body from "./component/Body";
 import About from "./component/about/About";
@@ -31,86 +31,151 @@ const RestaurantIndexModule = lazy(
 
 const CartIndex = lazy(() => import("./component/cart/CartIndex"));
 
-const appRouter = createHashRouter([
-  {
-    path: "login",
-    element: <LoginForm />,
-    errorElement: <Error />,
-  },
-  {
-    path: "",
-    element: (
-      <GuardedRoutes>
-        <AppLayout />
-      </GuardedRoutes>
-    ),
-    errorElement: <Error />,
-    children: [
-      {
-        path: "",
-        element: (
-          <GuardedRoutes>
-            <Body />
-          </GuardedRoutes>
-        ),
-        errorElement: <Error />,
-      },
-      {
-        path: "about",
-        element: (
-          <GuardedRoutes>
-            <About />
-          </GuardedRoutes>
-        ),
-        errorElement: <Error />,
-      },
-      {
-        path: ":restId",
-        element: (
-          <Suspense fallback={<Loader />}>
-            <GuardedRoutes>
-              <RestaurantIndexModule />
-            </GuardedRoutes>
-          </Suspense>
-        ),
-        errorElement: <Error />,
-      },
-      {
-        path: "contact",
-        element: (
-          <Suspense fallback={<Loader />}>
-            <GuardedRoutes>
-              <ContactFile />
-            </GuardedRoutes>
-          </Suspense>
-        ),
-        errorElement: <Error />,
-      },
-      {
-        path: "cart",
-        element: (
-          <Suspense fallback={<Loader />}>
-            <GuardedRoutes>
-              <CartIndex />
-            </GuardedRoutes>
-          </Suspense>
-        ),
-        errorElement: <Error />,
-      },
-    ],
-  },
-  {
-    path: "*",
-    element: <LoginForm />,
-    errorElement: <Error />,
-  },
-]);
+// const appRouter = createHashRouter(
+//   [
+//     {
+//       path: "/login",
+//       element: <LoginForm />,
+//       errorElement: <Error />,
+//     },
+//     {
+//       path: "/",
+//       element: (
+//         <GuardedRoutes>
+//           <AppLayout />
+//         </GuardedRoutes>
+//       ),
+//       errorElement: <Error />,
+//       children: [
+//         {
+//           path: "/",
+//           element: (
+//             <GuardedRoutes>
+//               <Body />
+//             </GuardedRoutes>
+//           ),
+//           errorElement: <Error />,
+//         },
+//         {
+//           path: "about",
+//           element: (
+//             <GuardedRoutes>
+//               <About />
+//             </GuardedRoutes>
+//           ),
+//           errorElement: <Error />,
+//         },
+//         {
+//           path: ":restId",
+//           element: (
+//             <Suspense fallback={<Loader />}>
+//               <GuardedRoutes>
+//                 <RestaurantIndexModule />
+//               </GuardedRoutes>
+//             </Suspense>
+//           ),
+//           errorElement: <Error />,
+//         },
+//         {
+//           path: "contact",
+//           element: (
+//             <Suspense fallback={<Loader />}>
+//               <GuardedRoutes>
+//                 <ContactFile />
+//               </GuardedRoutes>
+//             </Suspense>
+//           ),
+//           errorElement: <Error />,
+//         },
+//         {
+//           path: "cart",
+//           element: (
+//             <Suspense fallback={<Loader />}>
+//               <GuardedRoutes>
+//                 <CartIndex />
+//               </GuardedRoutes>
+//             </Suspense>
+//           ),
+//           errorElement: <Error />,
+//         },
+//       ],
+//     },
+//     {
+//       path: "/*",
+//       element: <LoginForm />,
+//       errorElement: <Error />,
+//     },
+//   ],
+//   { basename: basename }
+// );
 
 function App() {
+  const basename = import.meta.env.VITE_BASENAME || "/";
+  console.log("basename", basename);
   return (
     <Provider store={AppStore}>
       <AuthProvider>
-        <RouterProvider router={appRouter} />
+        <HashRouter basename={basename}>
+          <Routes>
+            <Route index path="" element={<LoginForm />} />
+            <Route
+              path="home"
+              element={
+                <GuardedRoutes>
+                  <AppLayout />
+                </GuardedRoutes>
+              }
+            >
+              <Route
+                path=""
+                element={
+                  <GuardedRoutes>
+                    <Body />
+                  </GuardedRoutes>
+                }
+              />
+              <Route
+                path="about"
+                element={
+                  <GuardedRoutes>
+                    <About />
+                  </GuardedRoutes>
+                }
+              />
+              <Route
+                path=":restId"
+                element={
+                  <Suspense fallback={<Loader />}>
+                    <GuardedRoutes>
+                      <RestaurantIndexModule />
+                    </GuardedRoutes>
+                  </Suspense>
+                }
+              />
+              <Route
+                path="contact"
+                element={
+                  <Suspense fallback={<Loader />}>
+                    <GuardedRoutes>
+                      <ContactFile />
+                    </GuardedRoutes>
+                  </Suspense>
+                }
+              />
+              <Route
+                path="cart"
+                element={
+                  <Suspense fallback={<Loader />}>
+                    <GuardedRoutes>
+                      <CartIndex />
+                    </GuardedRoutes>
+                  </Suspense>
+                }
+              />
+            </Route>
+            <Route path="/*" element={<LoginForm />} />
+          </Routes>
+        </HashRouter>
       </AuthProvider>
     </Provider>
   );

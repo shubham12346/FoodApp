@@ -38,7 +38,8 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
 
   const setLogout = () => {
     setState((prev) => ({ ...prev, isLoggedIn: false }));
-    window.location.href = "/login";
+    const basename = import.meta.env.VITE_BASENAME || "/";
+    window.location.href = `${basename}/login`;
   };
 
   return (
